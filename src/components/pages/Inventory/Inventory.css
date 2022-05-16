@@ -1,0 +1,5 @@
+.update-quantity > button{
+    outline: none;
+    border: none;
+    transition: .5s;
+}
