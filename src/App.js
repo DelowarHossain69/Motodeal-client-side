@@ -16,6 +16,7 @@ import Login from './components/pages/Login/Login';
 import Register from './components/pages/Register/Register';
 import RequireAuth from './components/pages/RequireAuth/RequireAuth';
 import MyItems from './components/pages/MyItems/MyItems';
+import Blog from './components/pages/Blog/Blog';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path='/products' element={<Products/>}></Route>
           <Route path='/login' element={<Login/>}></Route>
           <Route path='/register' element={<Register/>}></Route>
+          <Route path='/blog' element={<Blog/>}></Route>
 
           <Route path='/inventory/:id' element={
             <RequireAuth>

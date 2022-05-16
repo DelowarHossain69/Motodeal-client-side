@@ -1,31 +1,35 @@
+import axios from "axios";
 import React, { useRef, useState } from "react";
-import {
-  useSendPasswordResetEmail,
-  useSignInWithEmailAndPassword,
-} from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import auth from "../../../firebase.init";
 import Loading from "../../shared/Loading/Loading";
 import LoginWith from "../../shared/LoginWith/LoginWith";
+import {
+  useSendPasswordResetEmail,
+  useSignInWithEmailAndPassword,
+} from "react-firebase-hooks/auth";
 
 const Login = () => {
   const [forgetPassworNeed, setForgetPasswordNeed] = useState(false);
   const { register, handleSubmit } = useForm();
   const emailRef = useRef();
-  const [sendPasswordResetEmail, sending, resetError] =
-    useSendPasswordResetEmail(auth);
+  const [sendPasswordResetEmail, sending ] = useSendPasswordResetEmail(auth);
 
-  const [signInWithEmailAndPassword, user, loading, error] =
-    useSignInWithEmailAndPassword(auth);
+  const [
+      signInWithEmailAndPassword,
+      user,
+      loading,
+      error
+      ] = useSignInWithEmailAndPassword(auth);
 
   // redirect after login
   const navigate = useNavigate();
   const loaction = useLocation();
-  const from = loaction?.from?.state?.pathname || "/";
+  const from = loaction?.state?.from?.pathname || "/";
 
-  console.log(loaction?.from?.state?.pathname);
+  console.log(loaction?.state?.form?.pathname);
 
   if (loading || sending) {
     return <Loading />;
@@ -35,9 +39,10 @@ const Login = () => {
     navigate(from, { replace: true });
   }
 
-  const onSubmit = (data) => {
-    console.log(data);
-    signInWithEmailAndPassword(data.email, data.password);
+  const onSubmit = async (user) => {
+    await signInWithEmailAndPassword(user.email, user.password);
+    const {data} = await axios.post('http://localhost:5000/login', user);
+    localStorage.setItem('accessToken', data.accessToken);
   };
 
   const handleForgetPassword = async () => {

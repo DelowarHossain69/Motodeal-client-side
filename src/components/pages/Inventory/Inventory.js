@@ -71,7 +71,7 @@ const Inventory = () => {
 
                 <div className='mt-5'>
                     <Button className='btn btn-danger' onClick={handleDeleverd}>Delevered</Button>
-                    <Button className='ms-2' onClick={()=> navigate(`/manageInventory`)}>Manage inventory</Button>
+                    <Button className='ms-2' onClick={()=> navigate(`/manageInventory`)}>Manage inventorys</Button>
                 </div>
             </div>
         </section>
