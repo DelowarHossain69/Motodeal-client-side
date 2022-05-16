@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 const Login = () => {
+  const [forgetPassworNeed, setForgetPasswordNeed] = useState(false);
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data) => {};
   return (
@@ -27,15 +29,30 @@ const Login = () => {
           required
         />
 
-        <input
-          className="w-100 mb-3 p-2"
-          {...register("password")}
-          placeholder="Enter your password"
-          type="text"
-          required
-        />
+        {forgetPassworNeed || (
+          <input
+            className="w-100 mb-3 p-2"
+            {...register("password")}
+            placeholder="Enter your password"
+            type="text"
+            required
+          />
+        )}
 
-        <input className="w-100 mb-3 p-2" type="submit" />
+        <input className="w-100 mb-3 p-2" type="submit" value={forgetPassworNeed ? 'Send email' : 'Login'} />
+
+        <p>
+          {forgetPassworNeed || 'Forget'} <strong
+            style={{ cursor: "pointer" }}
+            onClick={() => setForgetPasswordNeed(!forgetPassworNeed)}
+          >
+             {forgetPassworNeed ? 'Cancel password reset email.' : 'Password?'}
+          </strong>
+        </p>
+
+        <p>
+          Nedd an account? <Link to="/register">create an account</Link>
+        </p>
       </form>
     </div>
   );
