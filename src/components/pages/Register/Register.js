@@ -1,15 +1,27 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import LoginWith from "../../shared/LoginWith/LoginWith";
+import auth from "./../../../firebase.init";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 const Register = () => {
+    // const navigate = useNavigate();
+  const [createUserWithEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth);
+
   const { register, handleSubmit, reset } = useForm();
-  const onSubmit = (data) => {};
+
+  const onSubmit = (data) => {
+    if(data.password === data.confirmPassword){
+        createUserWithEmailAndPassword(data.email, data.password);
+        
+    }
+
+  };
 
   return (
     <div className="container mx-auto my-5">
-
       <div
         className="mx-auto p-4 rounded"
         style={{ width: "400px", background: "#ddd" }}
@@ -57,11 +69,12 @@ const Register = () => {
           <p>
             Already have an account? <Link to="/login"> Login</Link>
           </p>
+
+          <p>{error & error?.message}</p>
         </form>
 
         <LoginWith />
       </div>
-      
     </div>
   );
 };
