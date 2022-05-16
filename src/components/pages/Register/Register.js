@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import LoginWith from "../../shared/LoginWith/LoginWith";
 
 const Register = () => {
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data) => {};
 
   return (
-    <div
-      className="container mx-auto my-5 d-flex align-items-center justify-content-center"
-      style={{ height: "80vh" }}
-    >
+    <div className="container mx-auto my-5">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="mx-auto p-4 rounded"
@@ -62,6 +60,8 @@ const Register = () => {
         <p>
           Already have an account? <Link to="/login"> Login</Link>
         </p>
+
+        <LoginWith/>
       </form>
     </div>
   );
