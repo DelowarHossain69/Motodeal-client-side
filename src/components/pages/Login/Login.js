@@ -1,32 +1,34 @@
-import React, { useState } from "react";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import React, { useRef, useState } from "react";
+import {
+  useSendPasswordResetEmail,
+  useSignInWithEmailAndPassword,
+} from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import auth from "../../../firebase.init";
 import Loading from "../../shared/Loading/Loading";
 import LoginWith from "../../shared/LoginWith/LoginWith";
 
 const Login = () => {
   const [forgetPassworNeed, setForgetPasswordNeed] = useState(false);
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit } = useForm();
+  const emailRef = useRef();
+  const [sendPasswordResetEmail, sending, resetError] =
+    useSendPasswordResetEmail(auth);
 
-  const [
-    signInWithEmailAndPassword,
-    user,
-    loading,
-    error,
-  ] = useSignInWithEmailAndPassword(auth);
-
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(auth);
 
   // redirect after login
   const navigate = useNavigate();
   const loaction = useLocation();
   const from = loaction?.from?.state?.pathname || "/";
 
-  console.log(loaction?.from?.state?.pathname)
+  console.log(loaction?.from?.state?.pathname);
 
-  if(loading){
-      return <Loading/>
+  if (loading || sending) {
+    return <Loading />;
   }
 
   if (user) {
@@ -34,7 +36,20 @@ const Login = () => {
   }
 
   const onSubmit = (data) => {
+    console.log(data);
     signInWithEmailAndPassword(data.email, data.password);
+  };
+
+  const handleForgetPassword = async () => {
+    const email = emailRef.current.value;
+
+    if (email) {
+      await sendPasswordResetEmail(email);
+      toast("Please check your email.");
+      setForgetPasswordNeed(false);
+    } else {
+      toast("Please submit valid email.");
+    }
   };
 
   return (
@@ -49,13 +64,23 @@ const Login = () => {
             <h3 className="my-3">Please Login</h3>
           </div>
 
-          <input
-            className="w-100 mb-3 p-2"
-            {...register("email")}
-            placeholder="Enter your email"
-            type="email"
-            required
-          />
+          {forgetPassworNeed ? (
+            <input
+              className="w-100 mb-3 p-2"
+              ref={emailRef}
+              placeholder="Enter your email"
+              type="email"
+              required
+            />
+          ) : (
+            <input
+              className="w-100 mb-3 p-2"
+              {...register("email")}
+              placeholder="Enter your email"
+              type="email"
+              required
+            />
+          )}
 
           {forgetPassworNeed || (
             <input
@@ -67,11 +92,16 @@ const Login = () => {
             />
           )}
 
-          <input
-            className="w-100 mb-3 p-2"
-            type="submit"
-            value={forgetPassworNeed ? "Send email" : "Login"}
-          />
+          {forgetPassworNeed ? (
+            <input
+              className="w-100 mb-3 p-2"
+              type="button"
+              value="Send reset email"
+              onClick={handleForgetPassword}
+            />
+          ) : (
+            <input className="w-100 mb-3 p-2" type="submit" value="Login" />
+          )}
 
           <p>
             {forgetPassworNeed || "Forget"}{" "}

@@ -13,8 +13,9 @@ const AddProduct = () => {
     if(loading){
         return <Loading/>
     }
+
     const onSubmit =  data => {
-        axios.post(`http://localhost:5000/car`, data)
+        axios.post(`http://localhost:5000/car`, {...data, email : user?.email})
         .then(res => {
             if(res.status === 200){
                 reset();
@@ -33,6 +34,7 @@ const AddProduct = () => {
 
     return (
         <div className='container mx-auto my-5'>
+                <h4 className='text-center'>Add new item </h4>
             <form onSubmit={handleSubmit(onSubmit)} className="w-50 mx-auto">
 
                 <input className='w-100 mb-3 p-2' {...register("name")} placeholder="Name" type='text' required />

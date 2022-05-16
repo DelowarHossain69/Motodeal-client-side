@@ -15,6 +15,7 @@ import ProductDetails from './components/pages/ProductDetails/ProductDetails';
 import Login from './components/pages/Login/Login';
 import Register from './components/pages/Register/Register';
 import RequireAuth from './components/pages/RequireAuth/RequireAuth';
+import MyItems from './components/pages/MyItems/MyItems';
 
 
 function App() {
@@ -51,9 +52,15 @@ function App() {
             </RequireAuth>
           }></Route>
 
+          <Route path='/myItems' element={
+            <RequireAuth>
+              <MyItems/>
+            </RequireAuth>
+          }></Route>
+
           <Route path='/productDetails/:id' element={<ProductDetails/>}></Route>
           <Route path='*' element={<Error/>}></Route>
-          
+
         </Routes>
         <Footer/>
         <ToastContainer/>
