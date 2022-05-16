@@ -12,6 +12,7 @@ import Error from './components/pages/Error/Error';
 import Footer from './components/shared/Footer/Footer';
 import AddProduct from './components/pages/AddProduct/AddProduct';
 import ProductDetails from './components/pages/ProductDetails/ProductDetails';
+import Login from './components/pages/Login/Login';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home/>}></Route>
           <Route path='/products' element={<Products/>}></Route>
+          <Route path='/login' element={<Login/>}></Route>
           <Route path='/inventory/:id' element={<Inventory/>}></Route>
           <Route path='/manageInventory' element={<ManageInventory/>}></Route>
           <Route path='/update/:id' element={<UpdateProduct/>}></Route>
