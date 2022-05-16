@@ -7,7 +7,7 @@ import {signOut} from "firebase/auth";
 
 const Header = () => {
   const [user] = useAuthState(auth);
-  console.log(user);
+
   return (
     <Navbar
       collapseOnSelect
@@ -40,7 +40,7 @@ const Header = () => {
                   Manage inventory
                 </Nav.Link>
 
-                <Nav.Link as={Link} to="/addItems">
+                <Nav.Link as={Link} to="/addProduct">
                   Add Items
                 </Nav.Link>
 

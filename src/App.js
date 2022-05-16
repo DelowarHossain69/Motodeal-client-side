@@ -14,6 +14,7 @@ import AddProduct from './components/pages/AddProduct/AddProduct';
 import ProductDetails from './components/pages/ProductDetails/ProductDetails';
 import Login from './components/pages/Login/Login';
 import Register from './components/pages/Register/Register';
+import RequireAuth from './components/pages/RequireAuth/RequireAuth';
 
 
 function App() {
@@ -25,12 +26,34 @@ function App() {
           <Route path='/products' element={<Products/>}></Route>
           <Route path='/login' element={<Login/>}></Route>
           <Route path='/register' element={<Register/>}></Route>
-          <Route path='/inventory/:id' element={<Inventory/>}></Route>
-          <Route path='/manageInventory' element={<ManageInventory/>}></Route>
-          <Route path='/update/:id' element={<UpdateProduct/>}></Route>
-          <Route path='/addProduct' element={<AddProduct/>}></Route>
+
+          <Route path='/inventory/:id' element={
+            <RequireAuth>
+                <Inventory/>
+            </RequireAuth>
+          }></Route>
+
+          <Route path='/manageInventory' element={
+            <RequireAuth>
+                <ManageInventory/>
+            </RequireAuth>
+          }></Route>
+
+          <Route path='/update/:id' element={
+            <RequireAuth>
+                <UpdateProduct/>
+            </RequireAuth>
+          }></Route>
+
+          <Route path='/addProduct' element={
+            <RequireAuth>
+              <AddProduct/>
+            </RequireAuth>
+          }></Route>
+
           <Route path='/productDetails/:id' element={<ProductDetails/>}></Route>
           <Route path='*' element={<Error/>}></Route>
+          
         </Routes>
         <Footer/>
         <ToastContainer/>

@@ -5,6 +5,7 @@ import {
   useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
 import auth from "./../../../firebase.init";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const LoginWith = () => {
 
@@ -12,6 +13,15 @@ const LoginWith = () => {
     useSignInWithFacebook(auth);
 
   const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
+
+  // redirect after login
+  const navigate = useNavigate();
+  const loaction = useLocation();
+  const from = loaction?.from?.state?.pathname || '/';
+
+  if(fbUser || googleUser){
+    navigate(from, {replace : true});
+  }
 
   return (
     <div className="py-3">

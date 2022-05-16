@@ -2,10 +2,17 @@ import axios from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../../firebase.init';
+import Loading from '../../shared/Loading/Loading';
 
 const AddProduct = () => {
+    const [user, loading] = useAuthState(auth);
     const { register, handleSubmit, reset } = useForm();
 
+    if(loading){
+        return <Loading/>
+    }
     const onSubmit =  data => {
         axios.post(`http://localhost:5000/car`, data)
         .then(res => {

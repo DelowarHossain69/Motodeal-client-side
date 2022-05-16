@@ -1,12 +1,42 @@
 import React, { useState } from "react";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import auth from "../../../firebase.init";
+import Loading from "../../shared/Loading/Loading";
 import LoginWith from "../../shared/LoginWith/LoginWith";
 
 const Login = () => {
   const [forgetPassworNeed, setForgetPasswordNeed] = useState(false);
   const { register, handleSubmit, reset } = useForm();
-  const onSubmit = (data) => {};
+
+  const [
+    signInWithEmailAndPassword,
+    user,
+    loading,
+    error,
+  ] = useSignInWithEmailAndPassword(auth);
+
+
+  // redirect after login
+  const navigate = useNavigate();
+  const loaction = useLocation();
+  const from = loaction?.from?.state?.pathname || "/";
+
+  console.log(loaction?.from?.state?.pathname)
+
+  if(loading){
+      return <Loading/>
+  }
+
+  if (user) {
+    navigate(from, { replace: true });
+  }
+
+  const onSubmit = (data) => {
+    signInWithEmailAndPassword(data.email, data.password);
+  };
+
   return (
     <div className="container mx-auto my-5 ">
       <div
@@ -56,6 +86,8 @@ const Login = () => {
           <p>
             Nedd an account? <Link to="/register">create an account</Link>
           </p>
+
+          <p>{error && error?.message}</p>
         </form>
         <LoginWith />
       </div>

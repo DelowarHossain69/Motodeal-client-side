@@ -1,24 +1,32 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import LoginWith from "../../shared/LoginWith/LoginWith";
 import auth from "./../../../firebase.init";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import Loading from "../../shared/Loading/Loading";
 
 const Register = () => {
-    // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [createUserWithEmailAndPassword, user, loading, error] =
-    useCreateUserWithEmailAndPassword(auth);
-
+    useCreateUserWithEmailAndPassword(auth, {sendEmailVerification : true});
   const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = (data) => {
-    if(data.password === data.confirmPassword){
-        createUserWithEmailAndPassword(data.email, data.password);
-        
+    if (data.password === data.confirmPassword) {
+      createUserWithEmailAndPassword(data.email, data.password);
+    } else {
+      alert("Your password and confirm password not match.");
     }
-
   };
+
+  if(user){
+    navigate('/');
+  }
+
+  if(loading){
+      return <Loading/>
+  }
 
   return (
     <div className="container mx-auto my-5">
@@ -70,7 +78,7 @@ const Register = () => {
             Already have an account? <Link to="/login"> Login</Link>
           </p>
 
-          <p>{error & error?.message}</p>
+          <p>{error && error?.message}</p>
         </form>
 
         <LoginWith />
