@@ -12,9 +12,9 @@ const ProductDetails = () => {
     }, []);
 
     return (
-        <div className='container mx-auto text-center'>
+        <div className='container mx-auto text-center py-5'>
             <img src={product.img}/>
-            <h2>Name :{product.name}</h2>
+            <h3 className='my-3'>Name :{product.name}</h3>
             <h5>Quantity : {product.quantity}</h5>
             <h5>Supplier : {product.supplier}</h5>
             <p>Description : {product.description}</p>

@@ -93,10 +93,12 @@ const ManageInventory = () => {
                 </Button>
               </td>
               <td>
-                <Button 
-                className="btn btn-warning text-white"
-                 onClick={()=> navigate(`/productDetails/${product._id}`)}
-                >View</Button>
+                <Button
+                  className="btn btn-warning text-white"
+                  onClick={() => navigate(`/productDetails/${product._id}`)}
+                >
+                  View
+                </Button>
               </td>
             </tr>
           ))}
