@@ -12,9 +12,10 @@ const MyItems = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/myItems?email=${user?.email}`, {
-      headers : {auth : `Bearar ${localStorage.getItem('accessToken')}`}
-    })
+    axios
+      .get(`http://localhost:5000/myItems?email=${user?.email}`, {
+        headers: { auth: `Bearar ${localStorage.getItem("accessToken")}` },
+      })
       .then((data) => setProducts(data.data));
   }, []);
 
@@ -46,11 +47,17 @@ const MyItems = () => {
 
   return (
     <div className="my-5 container mx-auto">
-        <h3 className="mb-5">My items :</h3>
+      <h3 className="mb-5">My items :</h3>
       <Row xs={1} md={3} className="g-4">
+
         {products?.map((car) => (
-          <MyItemCart key={car._id} carInfo={car} handelDelete={handelDelete}></MyItemCart>
+          <MyItemCart
+            key={car._id}
+            carInfo={car}
+            handelDelete={handelDelete}
+          ></MyItemCart>
         ))}
+        
       </Row>
     </div>
   );
