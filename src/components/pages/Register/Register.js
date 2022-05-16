@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginWith from "../../shared/LoginWith/LoginWith";
 import auth from "./../../../firebase.init";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
@@ -8,9 +8,12 @@ import Loading from "../../shared/Loading/Loading";
 
 const Register = () => {
   const navigate = useNavigate();
-  const [createUserWithEmailAndPassword, user, loading, error] =
-    useCreateUserWithEmailAndPassword(auth, {sendEmailVerification : true});
-  const { register, handleSubmit, reset } = useForm();
+  const [
+    createUserWithEmailAndPassword,
+    user,
+    loading, 
+    error] =useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
+  const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
     if (data.password === data.confirmPassword) {
@@ -20,12 +23,12 @@ const Register = () => {
     }
   };
 
-  if(user){
-    navigate('/');
+  if (user) {
+    navigate("/");
   }
 
-  if(loading){
-      return <Loading/>
+  if (loading) {
+    return <Loading />;
   }
 
   return (
