@@ -11,6 +11,7 @@ import ManageInventory from './components/pages/ManageInventory/ManageInventory'
 import Error from './components/pages/Error/Error';
 import Footer from './components/shared/Footer/Footer';
 import AddProduct from './components/pages/AddProduct/AddProduct';
+import ProductDetails from './components/pages/ProductDetails/ProductDetails';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path='/manageInventory' element={<ManageInventory/>}></Route>
           <Route path='/update/:id' element={<UpdateProduct/>}></Route>
           <Route path='/addProduct' element={<AddProduct/>}></Route>
+          <Route path='/productDetails/:id' element={<ProductDetails/>}></Route>
           <Route path='*' element={<Error/>}></Route>
         </Routes>
         <Footer/>
