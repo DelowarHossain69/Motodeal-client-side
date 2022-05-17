@@ -11,7 +11,7 @@ const ManageInventory = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/cars`)
+      .get(`https://thawing-waters-01776.herokuapp.com/cars`)
       .then((data) => setProduct(data.data));
   }, []);
 
@@ -27,7 +27,7 @@ const ManageInventory = () => {
   const handelDelete = async (id) => {
     const confirm = window.confirm("Are you sure?");
     if (confirm) {
-      const { data } = await axios.delete(`http://localhost:5000/car/${id}`);
+      const { data } = await axios.delete(`https://thawing-waters-01776.herokuapp.com/car/${id}`);
 
       if (data.deletedCount > 0) {
         const newProducts = products.filter((p) => p._id !== id);

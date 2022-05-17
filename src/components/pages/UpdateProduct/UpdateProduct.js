@@ -13,12 +13,12 @@ const UpdateProduct = () => {
     const { name, img, supplier, description, price, quentity } = product;
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/car/${id}`)
+        axios.get(`https://thawing-waters-01776.herokuapp.com/car/${id}`)
             .then(data => setProduct(data.data));
     }, [notification]);
 
     const onSubmit =  data => {
-        axios.put(`http://localhost:5000/car/${id}`, data)
+        axios.put(`https://thawing-waters-01776.herokuapp.com/car/${id}`, data)
         .then(res => {
             console.log('updated', res);
             if(res.status === 200){

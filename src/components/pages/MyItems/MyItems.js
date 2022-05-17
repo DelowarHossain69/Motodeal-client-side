@@ -13,7 +13,7 @@ const MyItems = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/myItems?email=${user?.email}`, {
+      .get(`https://thawing-waters-01776.herokuapp.com/myItems?email=${user?.email}`, {
         headers: { auth: `Bearar ${localStorage.getItem("accessToken")}` },
       })
       .then((data) => setProducts(data.data));
@@ -26,7 +26,7 @@ const MyItems = () => {
   const handelDelete = async (id) => {
     const confirm = window.confirm("Are you sure?");
     if (confirm) {
-      const { data } = await axios.delete(`http://localhost:5000/car/${id}`);
+      const { data } = await axios.delete(`https://thawing-waters-01776.herokuapp.com/car/${id}`);
 
       if (data.deletedCount > 0) {
         const newProducts = products.filter((p) => p._id !== id);

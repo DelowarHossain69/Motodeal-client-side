@@ -11,19 +11,19 @@ const ProductCollection = () => {
 
     // get all cars
     useEffect(()=>{
-        axios.get('http://localhost:5000/cars')
+        axios.get('https://thawing-waters-01776.herokuapp.com/cars')
         .then(data => setAllCars(data.data));
     }, []);
 
     // get three latest cars for home page
     useEffect(()=>{
-        axios.get('http://localhost:5000/threeCars')
+        axios.get('https://thawing-waters-01776.herokuapp.com/threeCars')
         .then(data => setCars(data.data));
     }, []);
 
     return (
         <section className='py-5 container mx-auto'>
-            <h1 className='text-center mb-5'>Latest Collection</h1>
+            <h1 className='text-center mb-5'>Inventory</h1>
             <div>
                 <Row xs={1} md={3} className="g-4">
                     {

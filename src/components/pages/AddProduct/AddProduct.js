@@ -15,7 +15,7 @@ const AddProduct = () => {
     }
 
     const onSubmit =  data => {
-        axios.post(`http://localhost:5000/car`, {...data, email : user?.email})
+        axios.post(`https://thawing-waters-01776.herokuapp.com/car`, {...data, email : user?.email})
         .then(res => {
             if(res.status === 200){
                 reset();

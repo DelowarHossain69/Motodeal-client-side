@@ -7,7 +7,7 @@ const ProductDetails = () => {
     const [product, setProduct] = useState({});
 
     useEffect(()=>{
-        axios.get(`http://localhost:5000/car/${id}`)
+        axios.get(`https://thawing-waters-01776.herokuapp.com/car/${id}`)
         .then(data => setProduct(data.data));
     }, []);
 

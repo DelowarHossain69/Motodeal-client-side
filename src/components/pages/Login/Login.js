@@ -41,7 +41,7 @@ const Login = () => {
 
   const onSubmit = async (user) => {
     await signInWithEmailAndPassword(user.email, user.password);
-    const {data} = await axios.post('http://localhost:5000/login', user);
+    const {data} = await axios.post('https://thawing-waters-01776.herokuapp.com/login', user);
     localStorage.setItem('accessToken', data.accessToken);
   };
 
@@ -119,7 +119,7 @@ const Login = () => {
           </p>
 
           <p>
-            Nedd an account? <Link to="/register">create an account</Link>
+            Need an account? <Link to="/register">create an account</Link>
           </p>
 
           <p>{error && error?.message}</p>

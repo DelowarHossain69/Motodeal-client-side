@@ -14,7 +14,7 @@ const Inventory = () => {
     const { name, img, supplier, description, price } = product;
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/car/${id}`)
+        axios.get(`https://thawing-waters-01776.herokuapp.com/car/${id}`)
             .then(data => {
                 setProduct(data.data);
                 setQuantity(data.data.quantity);
@@ -25,7 +25,7 @@ const Inventory = () => {
         e.preventDefault();
         const quantity = e.target.quantity.value;
 
-        axios.put(`http://localhost:5000/car/${id}`,{quantity})
+        axios.put(`https://thawing-waters-01776.herokuapp.com/car/${id}`,{quantity})
         .then(data => {
             if(data.status === 200){
                 e.target.reset();
@@ -41,7 +41,7 @@ const Inventory = () => {
             quantity = 0;
         }
 
-        axios.put(`http://localhost:5000/car/${id}`,{quantity})
+        axios.put(`https://thawing-waters-01776.herokuapp.com/car/${id}`,{quantity})
         .then(data => {
             if(data.status === 200){
                 toast("Product deleverd.");
