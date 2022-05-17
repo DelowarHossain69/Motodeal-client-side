@@ -18,8 +18,8 @@ const LoginWith = () => {
 
   // redirect after login
   const navigate = useNavigate();
-  const loaction = useLocation();
-  const from = loaction?.from?.state?.pathname || "/";
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || "/";
 
   useEffect(()=>{
     async function run(){

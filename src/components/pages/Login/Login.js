@@ -26,10 +26,10 @@ const Login = () => {
 
   // redirect after login
   const navigate = useNavigate();
-  const loaction = useLocation();
-  const from = loaction?.state?.from?.pathname || "/";
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || "/";
 
-  console.log(loaction?.state?.form?.pathname);
+  console.log(location?.state?.form?.pathname);
 
   if (loading || sending) {
     return <Loading />;
