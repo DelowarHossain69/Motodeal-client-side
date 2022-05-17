@@ -9,4 +9,5 @@
     * Mongodb
     * React router
     * React firebase hook
-    * Firebase etc.
+    * Firebase 
+    * JWT etc.
