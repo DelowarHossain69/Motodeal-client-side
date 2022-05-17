@@ -6,6 +6,7 @@ import {
 } from "react-firebase-hooks/auth";
 import auth from "./../../../firebase.init";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const LoginWith = () => {
   const [signInWithFacebook, fbUser, fbLoading, fbError] =
@@ -23,6 +24,16 @@ const LoginWith = () => {
     navigate(from, { replace: true });
   }
 
+  const handleLoginWithGoogle = async () => {
+    await signInWithGoogle();
+
+    const { data } = await axios.post(
+      "https://thawing-waters-01776.herokuapp.com/login",
+      {user : googleUser.email}
+    );
+    localStorage.setItem("accessToken", data.accessToken);
+  };
+
   return (
     <div className="py-3">
       <div className="d-flex align-items-center justify-content-center mb-3">
@@ -34,7 +45,7 @@ const LoginWith = () => {
       <div className="d-flex align-items-center justify-content-center">
         <button
           className="p-2 outline-none border-0 bg-danger text-white rounded d-flex align-items-center me-3"
-          onClick={() => signInWithGoogle()}
+          onClick={handleLoginWithGoogle}
         >
           <img
             src="https://i.ibb.co/5xfQpxz/google.png"
