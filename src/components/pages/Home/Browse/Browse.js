@@ -3,7 +3,7 @@ import BorwseCart from './BorwseCart';
 
 const Browse = () => {
     const [browse, setBrowse] = useState([]);
-
+    console.log(browse)
     useEffect(()=>{
         fetch('browse.json')
         .then(res => res.json())
