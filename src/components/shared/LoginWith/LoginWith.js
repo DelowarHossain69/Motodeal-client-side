@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./LoginWith.css";
 import {
   useSignInWithFacebook,
@@ -7,6 +7,7 @@ import {
 import auth from "./../../../firebase.init";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { async } from "@firebase/util";
 
 const LoginWith = () => {
   const [signInWithFacebook, fbUser, fbLoading, fbError] =
@@ -20,6 +21,17 @@ const LoginWith = () => {
   const loaction = useLocation();
   const from = loaction?.from?.state?.pathname || "/";
 
+  useEffect(()=>{
+    async function run(){
+      const { data } = await axios.post(
+        "https://thawing-waters-01776.herokuapp.com/login",
+        {user : googleUser.email}
+      );
+      localStorage.setItem("accessToken", data.accessToken);
+    }
+    run();
+}, [googleUser]);
+
   if (fbUser || googleUser) {
     navigate(from, { replace: true });
   }
@@ -27,12 +39,9 @@ const LoginWith = () => {
   const handleLoginWithGoogle = async () => {
     await signInWithGoogle();
 
-    const { data } = await axios.post(
-      "https://thawing-waters-01776.herokuapp.com/login",
-      {user : googleUser.email}
-    );
-    localStorage.setItem("accessToken", data.accessToken);
   };
+
+
 
   return (
     <div className="py-3">
