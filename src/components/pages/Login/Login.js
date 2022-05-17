@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -10,13 +9,13 @@ import {
   useSendPasswordResetEmail,
   useSignInWithEmailAndPassword,
 } from "react-firebase-hooks/auth";
+import useToken from "../../../hooks/useToken";
 
 const Login = () => {
-  const [forgetPassworNeed, setForgetPasswordNeed] = useState(false);
+  const [forgetPasswordNeed, setForgetPasswordNeed] = useState(false);
   const { register, handleSubmit } = useForm();
   const emailRef = useRef();
   const [sendPasswordResetEmail, sending ] = useSendPasswordResetEmail(auth);
-
   const [
       signInWithEmailAndPassword,
       user,
@@ -24,25 +23,21 @@ const Login = () => {
       error
       ] = useSignInWithEmailAndPassword(auth);
 
-  // redirect after login
+  const [token] = useToken(user);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location?.state?.from?.pathname || "/";
-
-  console.log(location?.state?.form?.pathname);
 
   if (loading || sending) {
     return <Loading />;
   }
 
-  if (user) {
+  if (token) {
     navigate(from, { replace: true });
   }
 
-  const onSubmit = async (user) => {
-    await signInWithEmailAndPassword(user.email, user.password);
-    const {data} = await axios.post('https://thawing-waters-01776.herokuapp.com/login', user);
-    localStorage.setItem('accessToken', data.accessToken);
+  const onSubmit =  (user) => {
+    signInWithEmailAndPassword(user.email, user.password);
   };
 
   const handleForgetPassword = async () => {
@@ -69,7 +64,7 @@ const Login = () => {
             <h3 className="my-3">Please Login</h3>
           </div>
 
-          {forgetPassworNeed ? (
+          {forgetPasswordNeed ? (
             <input
               className="w-100 mb-3 p-2"
               ref={emailRef}
@@ -87,7 +82,7 @@ const Login = () => {
             />
           )}
 
-          {forgetPassworNeed || (
+          {forgetPasswordNeed || (
             <input
               className="w-100 mb-3 p-2"
               {...register("password")}
@@ -97,7 +92,7 @@ const Login = () => {
             />
           )}
 
-          {forgetPassworNeed ? (
+          {forgetPasswordNeed ? (
             <input
               className="w-100 mb-3 p-2"
               type="button"
@@ -109,12 +104,12 @@ const Login = () => {
           )}
 
           <p>
-            {forgetPassworNeed || "Forget"}{" "}
+            {forgetPasswordNeed || "Forget"}{" "}
             <strong
               style={{ cursor: "pointer" }}
-              onClick={() => setForgetPasswordNeed(!forgetPassworNeed)}
+              onClick={() => setForgetPasswordNeed(!forgetPasswordNeed)}
             >
-              {forgetPassworNeed ? "Cancel password reset email." : "Password?"}
+              {forgetPasswordNeed ? "Cancel password reset email." : "Password?"}
             </strong>
           </p>
 

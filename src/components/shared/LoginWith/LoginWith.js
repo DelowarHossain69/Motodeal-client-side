@@ -6,8 +6,7 @@ import {
 } from "react-firebase-hooks/auth";
 import auth from "./../../../firebase.init";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { async } from "@firebase/util";
+import useToken from './../../../hooks/useToken';
 
 const LoginWith = () => {
   const [signInWithFacebook, fbUser, fbLoading, fbError] =
@@ -20,28 +19,15 @@ const LoginWith = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location?.state?.from?.pathname || "/";
+  const [token] = useToken(googleUser || fbUser);
 
-  useEffect(()=>{
-    async function run(){
-      const { data } = await axios.post(
-        "https://thawing-waters-01776.herokuapp.com/login",
-        {user : googleUser.email}
-      );
-      localStorage.setItem("accessToken", data.accessToken);
-    }
-    run();
-}, [googleUser]);
-
-  if (fbUser || googleUser) {
+  if (token) {
     navigate(from, { replace: true });
   }
 
   const handleLoginWithGoogle = async () => {
     await signInWithGoogle();
-
   };
-
-
 
   return (
     <div className="py-3">

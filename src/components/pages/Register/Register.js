@@ -5,6 +5,7 @@ import LoginWith from "../../shared/LoginWith/LoginWith";
 import auth from "./../../../firebase.init";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import Loading from "../../shared/Loading/Loading";
+import useToken from './../../../hooks/useToken';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const Register = () => {
     loading, 
     error] =useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
   const { register, handleSubmit } = useForm();
+  const [token] = useToken(user);
 
   const onSubmit = (data) => {
     if (data.password === data.confirmPassword) {
@@ -23,7 +25,7 @@ const Register = () => {
     }
   };
 
-  if (user) {
+  if (token) {
     navigate("/");
   }
 

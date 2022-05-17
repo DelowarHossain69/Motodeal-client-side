@@ -5,7 +5,7 @@ const Browse = () => {
     const [browse, setBrowse] = useState([]);
     console.log(browse)
     useEffect(()=>{
-        fetch('browse.json')
+        fetch('data.json')
         .then(res => res.json())
         .then(data => setBrowse(data));
     }, []);
