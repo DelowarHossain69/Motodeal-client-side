@@ -34,8 +34,8 @@ const Register = () => {
   return (
     <div className="container mx-auto my-5">
       <div
-        className="mx-auto p-4 rounded"
-        style={{ width: "400px", background: "#ddd" }}
+        className="mx-auto p-3 rounded"
+        style={{ width: "350px", background: "#ddd" }}
       >
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="text-center">
